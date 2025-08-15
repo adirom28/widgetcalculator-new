@@ -1,0 +1,336 @@
+import wixLocation from 'wix-location';
+import wixWindow from 'wix-window';
+import wixData from 'wix-data';
+import wixCrm from 'wix-crm';
+
+import { calculatePrices, sendOrderInfoEmail } from 'backend/httpHelper';
+import { getDetails } from 'backend/gapi';
+
+const currentDate = new Date();
+
+const formatPhoneNumber = (value) => {
+	const input = value.replace(/\D/g,'').substring(0,10);
+	const zip = input.substring(0,3);
+	const middle = input.substring(3,6);
+	const last = input.substring(6,10);
+
+	return `(${zip}) ${middle} - ${last}`;
+};
+
+const showMessageBoxAndRedirect = () => {
+	wixWindow.openLightbox(
+		"MessageBox", {
+			title: "Warning",
+			text: "Url has been modified. Try to fill the widget forms again."
+		}).then(() => {
+			wixLocation.to("/");
+		});
+}
+
+const validatePlaces = async (model) => {
+	const placeFromResponse = await getDetails(model.placeFrom_id);
+	const placeToResponse = await getDetails(model.placeTo_id);
+
+	if (!placeFromResponse.result || !placeToResponse.result) {
+		throw new Error("Can not get details about places(s).");
+	}
+
+	const placeFrom = placeFromResponse.result.formatted_address;
+	if (!placeFrom.includes(model.placeFrom)) {
+		throw new Error('Place "From" does not match the associated id.');
+	}
+
+	const placeTo = placeToResponse.result.formatted_address;
+	if (!placeTo.includes(model.placeTo)) {
+		throw new Error('Place "To" does not match the associated id.');
+	}
+};
+
+const validatePrices = async (model) => {
+	const prices = await calculatePrices(model);
+
+	if (!prices) {
+		throw new Error('Can not obtain prices info.')
+	}
+
+	if (prices.regularPrice!== model.regularPrice ||
+		prices.cashDiscountPrice !== model.cashDiscountPrice) {
+			throw new Error('Calculated priсes do not match the values in url query.')
+	}
+};
+
+const validateModel = async (model) => {
+	try {
+		// await validatePlaces(model);
+		await validatePrices(model);
+
+		if(currentDate.getFullYear() > model.shipDate.getFullYear()  ||
+			currentDate.getMonth() > model.shipDate.getMonth() ||
+				currentDate.getDate() > model.shipDate.getDate()) {
+			throw new Error('Selected ship date can not be before the current date');
+		}
+	}
+	catch (e) {
+		console.log(e.message);
+		showMessageBoxAndRedirect();
+	}
+};
+
+const parse = (wixQueryObj) => {
+	const obj = {};
+
+	Object.keys(wixQueryObj).forEach(key => {
+		const value = wixQueryObj[key];
+		obj[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+	});
+
+	obj.vehicleModel = JSON.parse(obj.vehicleModel);
+	obj.distance = parseInt(obj.distance, 10);
+	obj.regularPrice = parseInt(obj.regularPrice, 10);
+	obj.cashDiscountPrice = parseInt(obj.cashDiscountPrice, 10);
+	obj.selectedPriceType = parseInt(obj.selectedPriceType, 10);
+	obj.shipDate = new Date(obj.shipDate);
+
+	return obj;
+};
+
+const zipCodeRegex = /\d{5}(-\d{4})?$/;
+
+const isEmptyObject = obj => Object.keys(obj).length === 0 && obj.constructor === Object;
+
+const createContact = (model) => {
+	return wixCrm.createContact({
+		"firstName": model.clientName,
+		"emails": [model.clientEmail],
+		"phones": [model.clientPhone]
+	});
+};
+
+const saveModelInDb = (dbModel) => {
+	return wixData.save("ClientOrders", dbModel);
+};
+
+const createContactAndSendEmail = (templateModel) => {
+		return createContact(templateModel)
+			.catch(e => null)
+			.then(_ => {
+				return sendOrderInfoEmail(templateModel)
+					.catch(e => null)
+			})
+};
+
+$w.onReady(function () {
+	let model;
+	const queryObj = wixLocation.query;
+
+	if (isEmptyObject(queryObj)) {
+		wixWindow.openLightbox("MessageBox", {
+			title: "Warning",
+			text: "At first you should fill the widget forms."
+		})
+		.then(() => {
+			wixLocation.to("/");
+		});
+
+		return;
+	}
+
+	try {
+		model = parse(queryObj);
+	} catch (e) {
+		showMessageBoxAndRedirect();
+	}
+
+	validateModel(model);
+
+	const inputs = {
+
+		$clientName: $w("#input1"),
+		$clientPhone: $w("#input2"),
+		$clientEmail: $w("#input3"),
+
+		$senderFirstName: $w("#input4"),
+		$senderLastName: $w("#input5"),
+
+		$streetAdressFrom: $w("#input6"),
+		$companyNameFrom: $w("#input7"),
+
+		$cityFrom: $w("#input8"),
+		$zipCodeFrom: $w("#input9"),
+		$stateFrom: $w("#input19"),
+		$senderPhone: $w("#input10"),
+
+		$receiverFirstName: $w("#input16"),
+		$receiverLastName: $w("#input17"),
+
+		$streetAdressTo: $w("#input11"),
+		$companyNameTo: $w("#input12"),
+
+		$cityTo: $w("#input13"),
+		$zipCodeTo: $w("#input14"),
+		$stateTo: $w("#input20"),
+		$receiverPhone: $w("#input15"),
+
+		$comments: $w("#textBox1"),
+
+		$shipDate: $w("#datePicker1"),
+	};
+
+	const [$vehicleInfo, $priceInfo] = [$w("#textBox2"), $w("#textBox3")];
+	const $submitButton = $w("#button1");
+
+	// inputs.$clientName.scrollTo();
+
+	inputs.$clientPhone.value = model.phone;
+	inputs.$clientEmail.value = model.email;
+
+	// Pickup Info
+	(() => {
+		const placeFromTerms = model.placeFrom.split(", ");
+		const matches = placeFromTerms[1].match(zipCodeRegex);
+		const zipCode = matches && matches[0];
+
+		const hasZipCode = !!zipCode;
+
+		inputs.$cityFrom.value = placeFromTerms[0];
+		inputs.$cityFrom.disable();
+
+		if (hasZipCode) {
+			inputs.$zipCodeFrom.value = zipCode;
+			inputs.$stateFrom.value = placeFromTerms[1].slice(0, 2);
+		} else {
+			inputs.$stateFrom.value = placeFromTerms[1];
+		}
+
+		inputs.$cityFrom.disable();
+		inputs.$stateFrom.disable();
+		inputs.$zipCodeFrom.disable()
+	})();
+
+	// Delivery Info
+	(() => {
+		const placeToTerms = model.placeTo.split(", ");
+		const matches = placeToTerms[1].match(zipCodeRegex);
+		const zipCode = matches && matches[0];
+
+		const isZipCodeMatched = !!zipCode;
+
+		inputs.$cityTo.value = placeToTerms[0];
+
+		if (isZipCodeMatched) {
+			inputs.$zipCodeTo.value = zipCode;
+			inputs.$stateTo.value = placeToTerms[1].slice(0, 2);
+		} else {
+			inputs.$stateTo.value = placeToTerms[1];
+		}
+
+		inputs.$cityTo.disable();
+		inputs.$stateTo.disable();
+		inputs.$zipCodeTo.disable()
+	})();
+
+	inputs.$shipDate.minDate = currentDate;
+
+	inputs.$shipDate.value = model.shipDate;
+
+	const vehicleInfo = `Model: ${model.vehicleModel.model}  Maker: ${model.vehicleMaker}  Year: ${model.vehicleYear}\nType: ${model.transportType}  Running: ${model.running}\nDistance: ${model.distanceText}`;
+	$vehicleInfo.value = vehicleInfo;
+
+	const isCashDiscountSelected = model.selectedPriceType === 1;
+
+	const priceInfo = `Price: $${isCashDiscountSelected ? model.cashDiscountPrice : model.regularPrice}`;
+
+	$priceInfo.value = priceInfo;
+
+	$submitButton.onClick(() => {
+		let isFormValid = true;
+
+		const keys = Object.keys(inputs);
+		const length = keys.length;
+		
+
+		for (let i = 0; i < length; i++) {
+			const $input = inputs[keys[i]];
+
+			if (!$input.validity.valid && $input.enabled) {
+				$input.updateValidityIndication();
+				$input.scrollTo().then(() => $input.focus());
+
+				isFormValid = false;
+				break;
+			}
+		}
+
+		if (isFormValid) {
+
+			const dbModel = {
+				clientName: inputs.$clientName.value,
+				clientPhone: formatPhoneNumber(inputs.$clientPhone.value),
+				clientEmail: inputs.$clientEmail.value,
+
+				distanceText: model.distanceText,
+				transportType: model.transportType,
+				transportRunning: model.running,
+
+				vehicleYear: model.vehicleYear,
+				vehicleMaker: model.vehicleMaker,
+				vehicleModel: model.vehicleModel.model,
+
+				shipDate: inputs.$shipDate.value,
+
+				senderFirstName: inputs.$senderFirstName.value,
+				senderLastName: inputs.$senderLastName.value,
+				senderPhone: formatPhoneNumber(inputs.$senderPhone.value),
+
+				receiverFirstName: inputs.$receiverFirstName.value,
+				receiverLastName: inputs.$receiverLastName.value,
+				receiverPhone: formatPhoneNumber(inputs.$receiverPhone.value),
+
+				cityFrom: inputs.$cityFrom.value,
+				streetAdressFrom: inputs.$streetAdressFrom.value,
+				companyNameFrom: inputs.$companyNameFrom.value,
+				zipCodeFrom: inputs.$zipCodeFrom.value,
+				stateFrom: inputs.$stateFrom.value,
+
+				cityTo: inputs.$cityTo.value,
+				streetAdressTo: inputs.$streetAdressTo.value,
+				companyNameTo: inputs.$companyNameTo.value,
+				zipCodeTo: inputs.$zipCodeTo.value,
+				stateTo: inputs.$stateTo.value,
+				comments: inputs.$comments.value,
+			};
+
+			if (isCashDiscountSelected) {
+				dbModel.cashDiscountPrice = model.cashDiscountPrice.toFixed(2).valueOf();
+			} else {
+				dbModel.regularPrice = model.regularPrice.toFixed(2).valueOf();
+			}
+
+			const defaultLabel = $submitButton.label;
+
+			$submitButton.label = "Loading...";
+			$submitButton.disable();
+			
+			saveModelInDb(dbModel)
+				.catch(e => {
+					$submitButton.label = defaultLabel;
+					$submitButton.enable();
+				})
+				.then(dbResult => {
+					if(!dbResult) {
+						return;
+					}
+
+					const templateModel = { ...dbModel };
+
+					templateModel.selectedPrice = dbModel.regularPrice || dbModel.cashDiscountPrice;
+					templateModel.orderLink = dbResult["link-clientorders-_id"];
+					templateModel.orderId = dbResult["_id"];
+
+					return createContactAndSendEmail(templateModel).then(_ => {
+						wixLocation.to(templateModel.orderLink);
+				})
+			});
+		}
+	});
+});

@@ -1,0 +1,168 @@
+.fixed-background {
+    background: url("../../assets/img/login/balloon-lg.jpg") no-repeat 50% fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+}
+
+.wrap-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75rem;
+    padding: 5% 10%;
+}
+
+.card {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    background-color: transparent;
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, .04), 0 1px 6px rgba(0, 0, 0, .04);
+    transition: height 1ms ease-in-out;
+}
+
+.auth-title {
+    font-weight: bold;
+    color: white;
+}
+
+.detail-text {
+    color: white;
+    white-space: pre-wrap;
+    font-size: .85rem;
+    line-height: 1.3rem;
+}
+
+.wrap-bg-content {
+    background: url("../../assets/img/login/balloon.jpg") no-repeat top;
+    background-size: cover;
+    width: 40%;
+    padding: 60px 50px;
+    border-radius: 1.25rem 0 0 1.25rem;
+    height: auto;
+    transition: height 1ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap-bg-content-descr {
+    flex-grow: 1;
+}
+
+.wrap-form {
+    width: 60%;
+    border-radius: 0 1.25rem 1.25rem 0;
+    padding: 60px;
+    background-color: white;
+    height: auto;
+    overflow: auto;
+    transition: height 3ms ease-in-out;
+}
+
+.auth-btn {
+    color: #fff;
+    border: 2px solid #fff;
+    background-color: transparent;
+    border-radius: 50px;
+    font-weight: 700;
+    letter-spacing: .05rem;
+    margin-top: 20px;
+    padding: .2rem 2rem .3rem 2rem;
+    height: 35px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .wrap-card {
+        flex-direction: column;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .card {
+        flex-direction: column;
+    }
+
+    .wrap-bg-content {
+        width: 100%;
+        padding: 40px;
+        border-radius: 1.25rem 1.25rem 0 0;
+    }
+
+    .wrap-form {
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+        border-radius: 0 0 1.25rem 1.25rem;
+    }
+
+}
+
+@media (min-width: 421px) and (max-width: 767px) {
+    .wrap-card {
+        flex-direction: column;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .card {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .wrap-bg-content {
+        width: 100%;
+        padding: 20px 30px;
+        border-radius: 1.25rem 1.25rem 0 0;
+    }
+
+    .wrap-form {
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+        border-radius: 0 0 1.25rem 1.25rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .wrap-card {
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .card {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .wrap-bg-content {
+        width: 100%;
+        padding: 20px 20px;
+        border-radius: 1.25rem 1.25rem 0 0;
+    }
+
+    .wrap-form {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        border-radius: 0 0 1.25rem 1.25rem;
+    }
+}

@@ -1,0 +1,25 @@
+
+.main-btn {
+  width: 100%;
+  margin: 0 !important;
+  display: block !important;
+  background-color: #f29112 !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  padding: 11px 0 !important;
+  font-weight: 500 !important;
+}
+.icon-arrow {
+  font-size: 10px;
+  margin-left: 3px;
+}
+
+.inner-form-content {
+  height: 230px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}

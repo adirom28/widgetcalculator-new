@@ -1,0 +1,29 @@
+.error-container {
+    border: 2px solid;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.04), 0 1px 6px rgba(0, 0, 0, 0.04);
+    padding: 1rem;
+    width: 80%;
+    margin: 16px auto;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+   /* animation: message 6s ease-in-out;*/
+}
+
+@keyframes message {
+    from {
+        opacity: 0.01;
+    }
+    30% {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+    }
+    60% {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+    }
+    to {
+        opacity: 0.1;
+        transition: opacity 300ms ease-in;
+    }
+}

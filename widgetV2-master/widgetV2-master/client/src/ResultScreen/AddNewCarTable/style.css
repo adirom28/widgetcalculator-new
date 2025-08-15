@@ -1,0 +1,48 @@
+.wrap-table {
+    margin-top: 20px;
+    max-width: 300px;
+}
+
+.modal-btn {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 15px;
+    border-radius: 2px;
+    box-shadow: 0 5px 5px -5px rgba(34, 60, 80, 0.6);
+}
+
+.cancel-btn {
+    background-color: #D9E1E1;
+    border: 1px #8d9494 solid;
+}
+
+.add-btn {
+    background-color: #f29112;
+    color: #ffffff;
+    border: 1px #f29112 solid;
+}
+
+button[disabled] {
+    opacity: .7;
+}
+
+.MuiInput-underline:before {
+    border: none !important;
+}
+
+.MuiInput-underline:after {
+    border-bottom-color: transparent !important;
+    border: none !important;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: none !important;
+}
+
+
+.helper-text {
+    font-size: 10px;
+    text-align: center;
+    color: red;
+    padding-bottom: 3px;
+}

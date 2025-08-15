@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+
+  frontend:
+    restart: unless-stopped
+    image: nginx:latest
+    container_name: frontend
+    network_mode: host
+    volumes:
+      - ../client/build:/www
+      - ./nginx/conf/default.conf:/etc/nginx/nginx.conf:ro
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - '27027:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=transport
+    volumes:
+      - ./mongo/data:/data/db/
+      - ./mongo/log:/var/log/mongodb/
+      - ./mongo/init/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    networks:
+      - main-network
+
+  booking-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: booking-server
+    container_name: booking-server
+    restart: on-failure
+    volumes:
+      - ./log:/log
+      - ./application.properties:/application.properties
+    depends_on:
+      - mongo
+    ports:
+      - '8080:8080'
+    networks:
+      - main-network
+
+networks:
+  main-network:

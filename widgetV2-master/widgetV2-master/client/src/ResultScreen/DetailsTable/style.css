@@ -1,0 +1,82 @@
+.table-details {
+    font-size: 12px;
+    font-weight: bold;
+}
+.details-block hr {
+    margin: 5px 0;
+}
+.table-details {
+    border: 1px #D9E1E1 solid;
+    border-radius: 3px;
+}
+.table-details .table-row-name {
+    color: #8d9494;
+    padding-right: 0 !important;
+}
+.table-details .table-row-value {
+    font-weight: normal;
+}
+.table-details .row:first-child {
+    margin-top: 10px;
+}
+.table-details .row:last-child {
+    margin-bottom: 10px;
+}
+.details-block input[type='radio']:after  {
+    border: 2px solid #8d9494;
+}
+.details-block .radio-container {
+    margin: 0;
+}
+.details-block .radio-container:first-child {
+    margin-right: 20px;
+}
+
+.table-row-value .radio-group-container {
+    margin: 0;
+    padding: 0;
+}
+
+.table-row-value .radio-container {
+    justify-content: flex-start;
+}
+
+.table-row-value .radio-container div{
+    margin-right: 20px;
+}
+
+.table-details .MuiIconButton-root {
+    padding: 2px;
+}
+
+.table-row-value .MuiInputBase-input {
+    font-size: 12px;
+}
+
+.table-row-value .MuiFormControl-root .MuiFormHelperText-root {
+    display: none;
+}
+
+.table-row-value {
+    max-width: calc(67% - 65px);
+    flex: 0 0 calc(67% - 65px);
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.table-row-name {
+    max-width: 33%;
+    flex: 0 0 33%;
+    padding-left: 15px;
+}
+
+.table-row-actions {
+    max-width: 65px;
+    flex: 0 0 65px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.table-details .MuiSvgIcon-root {
+    font-size: 16px;
+}

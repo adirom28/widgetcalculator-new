@@ -1,0 +1,25 @@
+.error-autocomplete-container {
+    position: relative;
+}
+.error-autocomplete-container .error-text {
+    position: absolute;
+    left: 12px;
+    bottom: 1px;
+    font-size: 9px;
+    color: #dd200c;
+}
+
+/* .MuiAutocomplete-option {
+    height: 30px !important;
+    font-size: 14px !important;
+}
+.MuiAutocomplete-option {
+    height: 30px !important;
+    font-size: 14px !important;
+}
+.MuiAutocomplete-paper {
+    max-height: 150px !important;
+}
+.MuiAutocomplete-listbox {
+    max-height: 150px !important;
+} */

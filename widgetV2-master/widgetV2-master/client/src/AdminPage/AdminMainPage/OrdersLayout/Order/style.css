@@ -1,0 +1,136 @@
+.order {
+    padding: 1rem;
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+    border-radius: 0.5rem;
+    background-color: #fff;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.wrap-detail-orders {
+    width: 65%;
+}
+
+.order-details {
+    width: 60%;
+    flex-wrap: wrap;
+}
+
+.wrap-order-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    width: 35%;
+}
+
+.wrap-customer-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.wrap-status-btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+}
+
+.wrap-note-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.wrap-other-info {
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+@media (min-width: 421px) and (max-width: 767px) {
+    .order {
+        flex-direction: column;
+    }
+
+    .wrap-detail-orders {
+        width: 100%;
+    }
+
+    .order-details {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .wrap-customer-details {
+        margin-top: .5rem;
+    }
+
+    .wrap-order-status {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .wrap-status-btn {
+        order: 2;
+        margin-top: 1rem;
+    }
+
+    .wrap-other-info {
+        margin: 1rem .5rem 0 0;
+        padding-top: 0;
+    }
+
+    .wrap-note-btn {
+        order: 3;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .order {
+        flex-direction: column;
+    }
+
+    .wrap-detail-orders {
+        width: 100%;
+    }
+
+    .order-details {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .wrap-customer-details {
+        margin-top: .5rem;
+    }
+
+    .wrap-order-status {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .wrap-status-btn {
+        order: 2;
+        margin-top: 1rem;
+    }
+
+    .wrap-other-info {
+        margin: 1rem .5rem 0 0;
+        padding-top: 0;
+    }
+
+    .wrap-note-btn {
+        order: 3;
+        margin-top: 1rem;
+    }
+}

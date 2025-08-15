@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <iframe id="frame"
+            src="https://widget.allcarstransport.com/widget"
+            style="height: 400px; width: 350px;border: none">
+
+    </iframe>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const frame= document.getElementById('frame');
+        frame.contentWindow.postMessage('url', "*");
+    });
+</script>
+
+  <!--  <iframe id="widget" src="https://localhost:3000/widget" style="height:400px;width:350px"></iframe>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // var widget = document.getElementById("widget");
+
+            window.onmessage = function (event) {
+                if (event.data) {
+                    window.location = "https://localhost:3000/widget?" + event.data.queryString;
+                }
+            };
+        });
+    </script>-->
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+.wrapper-tabs {
+    min-width: 100%;
+    width: 300px;
+}
+
+.tab .MuiAvatar-root.MuiAvatar-circle {
+    border-radius: 0 !important;
+    width: 12px !important;
+    height: 12px !important;
+    order: 2;
+    margin-left: 2px;
+    margin-top: 6px;
+}
+
+.tab .MuiTab-wrapper {
+    display: flex;
+    flex-direction: row !important;
+    text-transform: capitalize;
+    font-size: 15px;
+}
+
+@media (min-width: 421px) and (max-width: 767px) {
+    .tab .MuiTab-wrapper {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 420px) {
+    .tab .MuiTab-wrapper {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,30 @@
+.widget-forms-content-wrapper {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-direction: column;
+    display: flex;
+}
+
+.widget-form-wrapper {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    height: 100vh;
+}
+
+.widget-form-wrapper .form {
+    margin: 0 auto;
+    width: 310px;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.title span {
+  color: #dd200c;
+  white-space: nowrap;
+}

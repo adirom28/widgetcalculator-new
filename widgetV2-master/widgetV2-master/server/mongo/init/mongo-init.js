@@ -1,0 +1,1 @@
+db.createUser({user: "admin", pwd: "<D8zR7Xsf<L9{-", roles : [{role: "readWrite", db: "transport"}]});

@@ -1,0 +1,22 @@
+.wrap-dispatch-form {
+    display: flex;
+}
+
+@media (min-width: 421px) and (max-width: 767px) {
+    .wrap-dispatch-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+@media (max-width: 420px) {
+    .wrap-dispatch-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

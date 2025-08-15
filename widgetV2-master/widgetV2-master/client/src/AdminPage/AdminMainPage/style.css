@@ -1,0 +1,74 @@
+.sideBarOpen {
+    background-color: #fff;
+    width: 130px;
+    height: calc(100% - 50px);
+    min-height: 550px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0 .75rem .75rem 0;
+    box-shadow: -1px 5px 12px 1px rgba(34, 60, 80, 0.2);
+    padding: 0;
+    transition: all .5s ease-in-out;
+}
+
+.sideBarClose {
+    background-color: #fff;
+    width: 130px;
+    height: calc(100% - 50px);
+    min-height: 550px;
+    position: absolute;
+    top: 0;
+    left: -130px;
+    border-radius: 0 .75rem .75rem 0;
+    box-shadow: -1px 5px 12px 1px rgba(34, 60, 80, 0.2);
+    padding: 0;
+    transition: all .5s ease-in-out;
+}
+
+.wrapperContentOpen {
+    margin-left: 140px;
+    padding: 0 1rem 1rem .5rem;
+}
+
+.wrapperContent {
+    margin-left: 0;
+    transition: all .5s ease-in-out;
+    padding: 0 1rem;
+    background-color: #f8f8f8;
+}
+
+@media (min-width: 600px) and (max-width: 767px) {
+
+}
+
+@media (min-width: 421px) and (max-width: 600px) {
+    .sideBarOpen {
+        width: 105px;
+        z-index: 100;
+    }
+
+    .wrapperContentOpen {
+        margin-left: 0;
+    }
+
+    .wrapperContent {
+        margin-left: 0;
+    }
+}
+
+
+@media (max-width: 420px) {
+    .sideBarOpen {
+        width: 105px;
+        z-index: 100;
+    }
+
+    .wrapperContentOpen {
+        margin-left: 0;
+    }
+
+    .wrapperContent {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,45 @@
+.result-screen .header {
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.5);
+    padding: 12px 20px;
+}
+@media screen and (min-width: 576px) {
+    .result-screen .header {
+        padding: 12px 30px;
+    }
+}
+@media screen and (min-width: 768px) {
+    .result-screen .header {
+        padding: 12px 100px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .result-screen .header {
+        padding: 12px 150px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .result-screen .header {
+        padding: 12px 200px;
+    }
+}
+
+.result-screen .wrapper-logo {
+    display: inline-block;
+    float: left;
+}
+.result-screen .logo {
+    width: 60px;
+}
+.result-screen .contact {
+    display: inline-block;
+    float: right;
+    height: 100%;
+    color: #dd200c;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.result-screen span {
+    vertical-align: -webkit-baseline-middle;
+}

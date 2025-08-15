@@ -1,0 +1,30 @@
+.modal-wrap {
+    padding: 20px 35px;
+}
+
+.wrap-table {
+    margin: 10px 0;
+}
+
+.modal-title {
+    text-align: center;
+}
+
+.table-group-radio {
+    display: flex;
+    width: 100%;
+}
+
+.table-name {
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.table-radio-value {
+    padding-left: 20px;
+    padding-top: 6px;
+}
+
+.table-radio-value .wrap-radio {
+    padding-right: 10px;
+}

@@ -1,0 +1,79 @@
+/*general*/
+.stage-wrapper {
+    margin: 0 auto;
+    width: fit-content;
+    cursor: pointer;
+}
+.stage-label {
+    font-size: 11px;
+    color: #f29112;;
+    text-align: center;
+    width: 100%;
+}
+.outer-circle {
+    margin: 0 auto;
+    background: #f2ad5b;
+    border-radius: 50%;
+    border: 2px #f3f6f6 solid;
+    height: 38px;
+    width: 38px;
+    position: relative;
+}
+.inner-circle {
+    position: absolute;
+    background: #f29112;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    top: 50%;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    border: 2px #f3f6f6 solid;
+    text-align: center;
+}
+.fa-icon {
+    color: #f3f6f6;
+}
+.stage-number {
+    font-size: 12px;
+    font-style: initial;
+    font-weight: 600 !important;
+}
+.stage-check {
+    display: inline-table;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+/*prev state*/
+.state-state-prev .stage-number {
+    display: none;
+}
+.state-state-prev .inner-circle:hover {
+    background-color: #f4b57d;
+}
+
+/*current state*/
+.state-state-current .stage-check {
+    display: none;
+}
+.state-state-current .outer-circle {
+    border-width: 0;
+    background-color: #f3f6f6;
+}
+
+/*next state*/
+.state-state-next .outer-circle {
+    border-width: 0;
+    background-color: #f3f6f6;
+}
+.state-state-next .stage-label {
+    color: #a2a7a7;
+}
+.state-state-next .inner-circle {
+    background-color: #a2a7a7;
+}
+.state-state-next .stage-check {
+    display: none;
+}
+
